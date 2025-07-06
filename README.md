@@ -121,3 +121,99 @@ for position in search_positions:
  
 
 # Practice Question 1
+import random
+import matplotlib.pyplot as plt
+import time as time
+
+def generateList(size):
+  return random.sample(range(1,size*10),size)
+
+def linerSearch(arr,target):
+  for num in arr:
+    if(num == target):
+      return num
+  return -1
+
+def measureTime(arr,target):
+  startTime=time.time()
+  linerSearch(arr,target)
+  endTime=time.time()
+  return endTime - startTime
+
+timeStart=[]
+timeMid=[]
+timeEnd=[]
+
+sizes = [100,23430,4500,7000,6770,5666]
+for size in sizes:
+  arr=generateList(size)
+
+  arr[0]=-1
+  startTime=measureTime(arr,-1)
+
+  arr[size//2]=-2
+  midTime=measureTime(arr,-2)
+
+  arr[-1]=-3
+  endTime=measureTime(arr,-3)
+
+  timeStart.append(startTime)
+  timeMid.append(midTime)
+  timeEnd.append(endTime)
+
+plt.plot(sizes,timeStart,marker='o',label='start')
+plt.plot(sizes,timeMid,marker='o',label='mid')
+plt.plot(sizes,timeEnd,marker='o',label='End')
+
+plt.xlabel('Size of array')
+plt.ylabel('Time in Seconds')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Practice Question 2
+
+# Analyzing the number of comparisons made in each search 
+
+import random
+import matplotlib.pyplot as plt
+import time as time
+
+def generateList(size):
+  return random.sample(range(1,size*10),size)
+
+def linearSearch(arr,target):
+  comparisons=0
+  for num in arr:
+    comparisons+=1
+    if(num == target):
+      break
+  return comparisons
+
+
+timeStart=[]
+timeMid=[]
+timeEnd=[]
+
+sizes = [100,23430,4500,7000,6770,5666]
+for size in sizes:
+  arr=generateList(size)
+
+  startTime=linearSearch(arr,arr[0])
+  midTime=linearSearch(arr,arr[size//2])
+  endTime=linearSearch(arr,arr[-1])
+
+  timeStart.append(startTime)
+  timeMid.append(midTime)
+  timeEnd.append(endTime)
+
+plt.plot(sizes,timeStart,marker='o',label='start')
+plt.plot(sizes,timeMid,marker='o',label='mid')
+plt.plot(sizes,timeEnd,marker='o',label='End')
+
+plt.xlabel('Size of array')
+plt.ylabel('Number of comparisons')
+plt.title("Analyzing number of comparisons in each search")
+plt.legend()
+plt.grid(True)
+plt.show()
