@@ -1,0 +1,47 @@
+# Binary recursive Search Time taken vs Size of list
+import time 
+import random as rand
+import matplotlib.pyplot as plt
+def binarySearch(low,high,arr,target):
+  if(low <= high):
+    mid = (low+high)//2
+    if(arr[mid] < target):
+      binarySearch(mid+1,high,arr,target)
+    elif(arr[mid] > target):
+      binarySearch(low,mid-1,arr,target)
+    else:
+      return mid
+
+
+def generate_list(length):
+  arr=rand.sample(range(0,length+1),length)
+  arr.sort()
+  return arr
+
+def searchTime(length):
+  arr=generate_list(length)
+  startTime=time.time()
+  target=int(input("Enter target value :"))
+  binarySearch(0,len(arr)-1,arr,target)
+  endTime=time.time()
+  return endTime-startTime
+
+arrSize=[]
+size=int(input('Number of times to perform analyses'))
+for i in range(0,size):
+  length = int(input('Enter size:'))
+  arrSize.append(length)
+
+timeTaken=[]
+for length in arrSize:
+  duration=searchTime(length)
+  timeTaken.append(duration)
+
+plt.plot(arrSize,timeTaken,marker='o',linestyle='-')
+plt.title('Binary recursive Search Time taken vs Size of list')
+plt.xlabel('List Size')
+plt.ylabel('Time taken in seconds')
+
+plt.grid(True)
+plt.show()
+
